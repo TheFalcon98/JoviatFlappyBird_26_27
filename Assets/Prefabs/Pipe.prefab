@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260645f6527604f92a0b5435d3ba7e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pipe
-  speed: 0.02
+  speed: 2.0
 --- !u!50 &5714164392787646028
 Rigidbody2D:
   serializedVersion: 5

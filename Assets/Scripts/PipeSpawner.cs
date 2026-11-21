@@ -8,11 +8,20 @@ public class PipeSpawner : MonoBehaviour
     public GameObject pipePrefab;
     public Transform spawnTop;
     public Transform spawnBottom;
+    private bool spawning;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
-    void Start()
+    public void BeginSpawning()
     {
-        InvokeRepeating("CreateNewPipe",0, timeToSpawn);   
+        if (!isActiveAndEnabled || spawning || !pipePrefab || !spawnTop || !spawnBottom) return;
+        spawning = true;
+        InvokeRepeating(nameof(CreateNewPipe), 0f, Mathf.Max(0.1f, timeToSpawn));
+    }
+
+    public void StopSpawning()
+    {
+        spawning = false;
+        CancelInvoke(nameof(CreateNewPipe));
     }
     
     // Update is called once per frame
@@ -23,6 +32,7 @@ public class PipeSpawner : MonoBehaviour
 
     void CreateNewPipe()
     {
+        if (!spawnTop || !spawnBottom || !pipePrefab) return;
         float randomY = Random.Range(spawnBottom.position.y, spawnTop.position.y);
         Vector3 newPos = new Vector3(spawnTop.position.x, randomY, spawnTop.position.z);
         GameObject o = Instantiate(pipePrefab, newPos, Quaternion.identity);
